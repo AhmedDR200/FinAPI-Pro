@@ -1,0 +1,23 @@
+{
+  "name": "finapi-pro",
+  "version": "1.0.0",
+  "description": "FinAPI Pro: A scalable API for advanced personal finance management. Includes recurring transactions, investment tracking, debt management, multi-currency support, goal tracking, advanced reporting, notifications, and more. Secure, efficient, and designed for seamless integration, empowering comprehensive financial management.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ahmed Magdy",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.4",
+    "morgan": "^1.10.0"
+  }
+}
