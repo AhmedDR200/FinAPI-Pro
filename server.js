@@ -11,6 +11,8 @@ const globalError = require("./src/middlewares/errorMiddleware");
 // routes
 const usersRoute = require("./src/routes/usersRoute");
 const transactionsRoute = require("./src/routes/transactionRoute");
+const investmentsRoute = require("./src/routes/InvestmentRoute");
+const debtRoute = require("./src/routes/debtRoute");
 
 // Load config
 dotenv.config();
@@ -31,6 +33,8 @@ if (process.env.NODE_ENV === "development") {
 // Mount routers
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/transactions", transactionsRoute);
+app.use("/api/v1/investments", investmentsRoute);
+app.use("/api/v1/debts", debtRoute);
 
 // 404 Error Handling Middleware
 app.all("*", (req, res, next) => {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const InvestmentSchema = new mongoose.Schema(
+const DebtSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -9,7 +9,7 @@ const InvestmentSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["Stock", "Crypto", "Real Estate", "Other"],
+      enum: ["Loan", "Credit Card", "Other"],
       default: "Other",
       required: true,
     },
@@ -25,6 +25,14 @@ const InvestmentSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    dueDate: {
+      type: Date,
+      required: true,
+    },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -33,9 +41,9 @@ const InvestmentSchema = new mongoose.Schema(
 );
 
 // populate user field with user data
-InvestmentSchema.pre(/^find/, function (next) {
+DebtSchema.pre(/^find/, function (next) {
   this.populate({ path: "user", select: "name" });
   next();
 });
 
-module.exports = mongoose.model("Investment", InvestmentSchema);
+module.exports = mongoose.model("Debt", DebtSchema);
