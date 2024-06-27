@@ -7,7 +7,6 @@ exports.createUserValidator = [
   check("password", "Please enter a password with 6 or more characters")
     .isLength({
       min: 6,
-      max: 200,
     })
     .withMessage("Password must be at least 6 characters long"),
   validetorMiddleware,
@@ -20,6 +19,6 @@ exports.getSingleUser = [
 
 exports.updateUserValidator = [
   check("name", "Name is required").not().isEmpty(),
-  check("email", "Please include a valid email").isEmail(),
+  // check("email", "Please include a valid email").isEmail(),
   validetorMiddleware,
 ];

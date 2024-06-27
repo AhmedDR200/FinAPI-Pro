@@ -20,7 +20,7 @@ router.route("/").post(createUserValidator, createUser).get(getUsers);
 router
   .route("/:id")
   .get(getSingleUser, getUser)
-  .put(updateUserValidator, updateUser)
+  .patch(updateUserValidator, updateUser)
   .delete(deleteUser);
 
 module.exports = router;

@@ -8,6 +8,9 @@ const colors = require("colors");
 const ApiError = require("./src/utils/apiError");
 const globalError = require("./src/middlewares/errorMiddleware");
 
+// routes
+const usersRoute = require("./src/routes/usersRoute");
+
 // Load config
 dotenv.config();
 
@@ -23,6 +26,9 @@ app.use(express.json());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// Mount routers
+app.use("/api/v1/users", usersRoute);
 
 // 404 Error Handling Middleware
 app.all("*", (req, res, next) => {
