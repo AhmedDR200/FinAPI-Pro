@@ -91,3 +91,41 @@ exports.deleteTransaction = asyncHandler(async (req, res) => {
     data: null,
   });
 });
+
+// @desc    Get monthly summary report
+// @route   GET /api/reports/monthly-summary
+// @access  Private/User
+// exports.getMonthlySummary = asyncHandler(async (req, res) => {
+//   const userId = req.user.id;
+//   const { month, year } = req.query; // Get month and year from query parameters
+
+//   // Validate month and year
+//   if (!month || !year) {
+//     return res.status(400).json({ msg: "Month and year are required" });
+//   }
+
+//   const startDate = new Date(year, month - 1, 1);
+//   const endDate = new Date(year, month, 0);
+
+//   const transactions = await Transaction.find({
+//     user: userId,
+//     date: { $gte: startDate, $lte: endDate },
+//   });
+
+//   const totalIncome = transactions
+//     .filter((t) => t.amount > 0)
+//     .reduce((sum, t) => sum + t.amount, 0);
+
+//   const totalExpense = transactions
+//     .filter((t) => t.amount < 0)
+//     .reduce((sum, t) => sum + t.amount, 0);
+
+//   res.json({
+//     month,
+//     year,
+//     totalIncome,
+//     totalExpense,
+//     netIncome: totalIncome + totalExpense,
+//     transactions,
+//   });
+// });

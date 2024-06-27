@@ -6,6 +6,7 @@ const {
   getTransaction,
   updateTransaction,
   deleteTransaction,
+  // getMonthlySummary,
 } = require("../controllers/transactionController");
 
 const {
@@ -25,5 +26,7 @@ router
   .get(getTransactionValidator, getTransaction)
   .put(updateTransactionValidator, updateTransaction)
   .delete(deleteTransactionValidator, deleteTransaction);
+
+// router.route("/summary/monthly/:id").get(getMonthlySummary);
 
 module.exports = router;
