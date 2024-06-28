@@ -14,6 +14,7 @@ const transactionsRoute = require("./src/routes/transactionRoute");
 const investmentsRoute = require("./src/routes/InvestmentRoute");
 const debtRoute = require("./src/routes/debtRoute");
 const authRoute = require("./src/routes/authRoute");
+const uploadRoute = require("./src/routes/uploadRoute");
 
 // Load config
 dotenv.config();
@@ -37,6 +38,7 @@ app.use("/api/v1/transactions", transactionsRoute);
 app.use("/api/v1/investments", investmentsRoute);
 app.use("/api/v1/debts", debtRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/upload", uploadRoute);
 
 // 404 Error Handling Middleware
 app.all("*", (req, res, next) => {
