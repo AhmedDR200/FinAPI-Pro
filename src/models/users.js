@@ -30,7 +30,13 @@ const UserSchema = new mongoose.Schema(
       default: "user",
     },
     avatar: {
-      type: String, // URL for user avatar
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    bankAccounts: {
+      type: String,
     },
   },
   {

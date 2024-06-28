@@ -74,65 +74,81 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 // @desc    Protect Route
 exports.protect = asyncHandler(async (req, res, next) => {
-  // check if token exist
+  // Check if token exists
   let token;
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-    console.log(token);
+    console.log("Token:", token);
   }
+
   if (!token) {
     return next(
       new ApiError(
-        "You are not login, Please login to get access this route",
+        "You are not logged in. Please log in to get access to this route",
         401
       )
     );
   }
-  // verify token
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  console.log(decoded);
-  // check id user exist
+
+  // Verify token
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log("Decoded Token:", decoded);
+  } catch (err) {
+    return next(new ApiError("Invalid token. Please log in again", 401));
+  }
+
+  // Check if user still exists
   const currentUser = await User.findById(decoded.userId);
+  console.log("Current User:", currentUser);
   if (!currentUser) {
     return next(
-      new ApiError(
-        "The User that belong to this token does no longer exist",
-        401
-      )
+      new ApiError("The user belonging to this token no longer exists", 401)
     );
   }
-  // check if the user change password after token creation
+
+  // Check if user changed password after the token was issued
   if (currentUser.passwordChangedAt) {
     const passwordChangedTime = parseInt(
       currentUser.passwordChangedAt.getTime() / 1000,
       10
     );
-    // Password changed after token created(Error)
+    console.log(
+      "Password Changed At:",
+      passwordChangedTime,
+      "Token Issued At:",
+      decoded.iat
+    );
     if (passwordChangedTime > decoded.iat) {
       return next(
-        new ApiError(
-          "User recntly changed his password, please login again...",
-          401
-        )
+        new ApiError("User recently changed password. Please log in again", 401)
       );
     }
   }
+
+  // Grant access to protected route
   req.user = currentUser;
   next();
 });
 
 // @desc    Allow to Access Route
-exports.allowedTo = (...roles) =>
+exports.allowedTo = (...permittedRoles) =>
   asyncHandler(async (req, res, next) => {
-    // Access Roles
-    if (!roles.includes(req.user.role)) {
+    // Check if user role exists and is permitted
+    if (!req.user || !req.user.role) {
+      return next(new ApiError("User role not found", 403));
+    }
+
+    if (!permittedRoles.includes(req.user.role)) {
       return next(
         new ApiError("You are not allowed to access this route", 403)
       );
     }
+
     next();
   });
 

@@ -12,7 +12,7 @@ exports.createUserValidator = [
   validetorMiddleware,
 ];
 
-exports.getSingleUser = [
+exports.getSingleUserValidator = [
   check("id", "Id is required").not().isEmpty(),
   validetorMiddleware,
 ];
